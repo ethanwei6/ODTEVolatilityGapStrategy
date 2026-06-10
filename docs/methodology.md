@@ -53,7 +53,18 @@ The script reports:
 - signal frequency
 - average next-day return after signal days
 
+## Hedge Overlay Extension
+
+The hedge overlay module applies the same no-lookahead logic to a generic hedge instrument.
+
+The signal is observed at close `t`, then hedge exposure is applied to the next close-to-close return. This allows comparison between:
+
+- permanent hedge exposure
+- conditional hedge exposure
+- conditional additive overlay exposure
+
+The code deliberately expects user-supplied local data and writes outputs to an ignored directory. This keeps the public repository reusable without exposing proprietary datasets or instrument-specific research.
+
 ## Interpretation
 
 A useful signal does not need to predict every bad day. It can still be valuable if it reduces exposure during a subset of high-risk regimes and improves the portfolio's drawdown profile.
-

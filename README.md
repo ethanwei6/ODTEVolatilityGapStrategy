@@ -63,6 +63,38 @@ The script writes:
 - `cumulative_performance.svg`
 - `drawdown_comparison.svg`
 
+## Hedge Overlay Backtest
+
+The repository also includes a generic hedge-overlay tester. It requires a local CSV with:
+
+| Column | Description |
+| --- | --- |
+| `date` | Trading date |
+| `strategy_return` | Daily return of the core strategy |
+| `vol_signal_change` | Prior-day volatility signal used to activate the hedge |
+| `hedge_return` | Daily return of the hedge instrument |
+
+Run:
+
+```bash
+python src/backtest_hedge_overlay.py \
+  --input data/local_hedge_input.csv \
+  --date-col date \
+  --strategy-return-col strategy_return \
+  --signal-col vol_signal_change \
+  --hedge-return-col hedge_return \
+  --trigger-return 0.20 \
+  --weights 0.025,0.05,0.10,0.15,0.20 \
+  --output-dir outputs
+```
+
+The hedge overlay compares:
+
+- unhedged baseline
+- permanent funded hedge
+- conditional funded hedge
+- conditional overlay hedge
+
 ## Strategy Variants
 
 ### Always Long
@@ -87,6 +119,7 @@ The goal is not to overfit a magic rule. The goal is to build a clean framework 
 - Does it improve return per unit of volatility?
 - Is the signal useful only contemporaneously, or does it have forward-looking value?
 - Is de-risking more robust than shorting?
+- Is a conditional hedge more efficient than a permanent hedge?
 
 ## Research Hygiene
 
